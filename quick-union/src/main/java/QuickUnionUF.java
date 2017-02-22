@@ -30,6 +30,8 @@ public class QuickUnionUF {
             return;
 
         id[p_root] = q;
+
+        count--;
     }
 
     public int root(int p)
@@ -44,6 +46,14 @@ public class QuickUnionUF {
     public boolean connected(int p, int q)
     {
         return root(p) == root(q);
+    }
+
+
+    public void show()
+    {
+        for (int i = 0; i < id.length; i++) {
+            StdOut.println(id[i]);
+        }
     }
 
     public static void main(String[] arguments)
@@ -65,8 +75,15 @@ public class QuickUnionUF {
 
         StdOut.println("count = " + uf.count);
 
-        StdOut.println(uf.connected(0, 9));
+        StdOut.println(uf.connected(0, 0));
+        StdOut.println(uf.connected(0, 1));
+        StdOut.println(uf.connected(0, 2));
+        StdOut.println(uf.connected(0, 5));
+        StdOut.println(uf.connected(0, 6));
+        StdOut.println(uf.connected(0, 7));
 
+        StdOut.println(uf.connected(3, 4));
+        StdOut.println(uf.connected(3, 8));
         StdOut.println(uf.connected(3, 9));
     }
 }

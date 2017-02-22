@@ -20,11 +20,6 @@ public class UF {
         }
     }
 
-    public int find(int p)
-    {
-       return id[p];
-    }
-
     public void union(int p, int q)
     {
         int i;
@@ -76,8 +71,15 @@ public class UF {
 
         StdOut.println("count = " + uf.count);
 
-        StdOut.println(uf.connected(0, 9));
+        StdOut.println(uf.connected(0, 0));
+        StdOut.println(uf.connected(0, 1));
+        StdOut.println(uf.connected(0, 2));
+        StdOut.println(uf.connected(0, 5));
+        StdOut.println(uf.connected(0, 6));
+        StdOut.println(uf.connected(0, 7));
 
+        StdOut.println(uf.connected(3, 4));
+        StdOut.println(uf.connected(3, 8));
         StdOut.println(uf.connected(3, 9));
     }
 }
