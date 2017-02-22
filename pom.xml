@@ -12,6 +12,7 @@
         <module>percolation-testing</module>
         <module>quick-find</module>
         <module>quick-union</module>
+        <module>weighted-quick-union</module>
     </modules>
 
 
