@@ -81,5 +81,7 @@ public class UF {
         StdOut.println(uf.connected(3, 4));
         StdOut.println(uf.connected(3, 8));
         StdOut.println(uf.connected(3, 9));
+
+        StdOut.println(uf.connected(0, 9));
     }
 }

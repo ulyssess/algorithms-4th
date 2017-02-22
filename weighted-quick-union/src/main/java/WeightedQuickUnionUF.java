@@ -21,7 +21,7 @@ public class WeightedQuickUnionUF {
 
         tree_size = new int[count];
         for (int i = 0; i < id.length; i++) {
-            id[i] = 0;
+            tree_size[i] = 0;
         }
     }
 
@@ -49,7 +49,8 @@ public class WeightedQuickUnionUF {
 
     public int root(int p)
     {
-        while(!(id[p] == p)) {
+        while(p != id[p]) {
+            id[p] = id[id[p]];  // different between weighted-quick-union and path-compression method
             p = id[p];
         }
 
@@ -73,6 +74,8 @@ public class WeightedQuickUnionUF {
 
     public static void main(String[] arguments)
     {
+        long now_time = System.currentTimeMillis();
+
         int n = StdIn.readInt();
 
         WeightedQuickUnionUF uf = new WeightedQuickUnionUF(n);
@@ -85,7 +88,7 @@ public class WeightedQuickUnionUF {
                 continue;
 
             uf.union(p, q);
-            StdOut.println(p + " " + q);
+            //StdOut.println(p + " " + q);
         }
 
         StdOut.println("count = " + uf.count);
@@ -100,5 +103,9 @@ public class WeightedQuickUnionUF {
         StdOut.println(uf.connected(3, 4));
         StdOut.println(uf.connected(3, 8));
         StdOut.println(uf.connected(3, 9));
+
+        StdOut.println(uf.connected(0, 9));
+
+        StdOut.println(System.currentTimeMillis() - now_time);
     }
 }
