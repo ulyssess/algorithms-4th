@@ -59,9 +59,6 @@ public class Percolation {
 
     public void open(int row, int col)    // open site (row, col) if it is not open already
     {
-        if (row == 2)
-            row = col;
-
         validate(row, col);
 
         if (isOpen(row, col))
