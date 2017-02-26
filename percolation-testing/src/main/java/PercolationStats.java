@@ -1,4 +1,6 @@
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
+import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Created by wangaichao on 17/2/24.
@@ -6,8 +8,8 @@ import edu.princeton.cs.algs4.*;
 public class PercolationStats {
     private double[] probabilitys;
 
-    public PercolationStats(int n, int trials)    // perform trials independent experiments on an n-by-n grid
-    {
+    // perform trials independent experiments on an n-by-n grid
+    public PercolationStats(int n, int trials) {
         int openSites;
         probabilitys = new double[trials];
 
@@ -17,11 +19,11 @@ public class PercolationStats {
 
             while (!pc.percolates()) {
                 // 随机open
-                openSites = StdRandom.uniform(0, n*n - 1);
-                pc.open(openSites/n + 1, openSites%n + 1);
+                openSites = StdRandom.uniform(0, (n*n - 1));
+                pc.open((openSites/n + 1), (openSites % n + 1));
             }
 
-            probabilitys[i] = (double)pc.numberOfOpenSites()/(n * n);
+            probabilitys[i] = (double) pc.numberOfOpenSites()/(n * n);
 
             if (n == 1)
                 probabilitys[i] = 1.0;
