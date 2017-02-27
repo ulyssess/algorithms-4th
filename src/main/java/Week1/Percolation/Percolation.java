@@ -1,3 +1,5 @@
+package Week1.Percolation;
+
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 /**
@@ -21,7 +23,7 @@ public class Percolation {
     public Percolation(int n)                // create n-by-n grid, with all sites blocked
     {
         if (n <= 0)
-            throw new java.lang.IllegalArgumentException("argument n ≤ 0");
+            throw new IllegalArgumentException("argument n ≤ 0");
 
         gridSize = n;
         UF = new WeightedQuickUnionUF(gridSize * gridSize + 2); // add two virtual site

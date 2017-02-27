@@ -1,4 +1,8 @@
-import edu.princeton.cs.algs4.*;
+package Week1.Percolation;
+
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
 
 /**
  * Created by wangaichao on 17/2/24.
@@ -54,10 +58,10 @@ public class PercolationStats {
         int trials = Integer.parseInt(args[1]);
 
         if (n <= 0)
-            throw new java.lang.IllegalArgumentException("argument n ≤ 0");
+            throw new IllegalArgumentException("argument n ≤ 0");
 
         if (trials <= 0)
-            throw new java.lang.IllegalArgumentException("argument trials ≤ 0");
+            throw new IllegalArgumentException("argument trials ≤ 0");
 
         PercolationStats ps = new PercolationStats(n, trials);
 
