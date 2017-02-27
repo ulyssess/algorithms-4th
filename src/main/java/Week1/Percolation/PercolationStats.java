@@ -1,6 +1,9 @@
+package Week1.Percolation;
+
+import Week1.Percolation.Percolation;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
-import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Created by wangaichao on 17/2/24.

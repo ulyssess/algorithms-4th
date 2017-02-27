@@ -1,3 +1,4 @@
+package Week1.Percolation;
 
 /**
  * Created by wangaichao on 17/2/23.
