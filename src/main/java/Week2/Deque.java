@@ -22,12 +22,10 @@ public class Deque<Item> implements Iterable<Item> {
     {
         Node now = first;
 
-        @Override
         public boolean hasNext() {
             return now != null;
         }
 
-        @Override
         public Item next() {
             if (now == null) {
                 throw new java.util.NoSuchElementException();
@@ -39,7 +37,6 @@ public class Deque<Item> implements Iterable<Item> {
             return temp.item;
         }
 
-        @Override
         public void remove() {
             throw new java.lang.UnsupportedOperationException();
         }
