@@ -118,7 +118,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         if (this.size() == 1) {
             now = first;
-            first = null;
         }
         else {
             int index = StdRandom.uniform(0, nodeSize);
