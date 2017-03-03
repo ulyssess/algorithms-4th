@@ -53,6 +53,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         for (int i = 0; i < queueSize; i++) {
             newQueue[i] = queue[i];
         }
+         queue = newQueue;
     }
 
     private void queueResizeSmall() {
@@ -61,6 +62,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         for (int i = 0; i < queueSize; i++) {
             newQueue[i] = queue[i];
         }
+
+        queue = newQueue;
     }
 
     public boolean isEmpty()                 // is the queue empty?
@@ -79,16 +82,35 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             queueResizeBig();
         }
 
-        queue[StdRandom.uniform(0, queue.length - 1)] = item;
+        queue[queueSize] = item;
 
         queueSize++;
     }
 
     public Item dequeue()                    // remove and return a random item
     {
+        int backup;
+
         Item item = null;
 
+        if (this.size() == 0)
+            throw new java.util.NoSuchElementException();
+
         int randomIndex = StdRandom.uniform(0, queue.length - 1);
+
+        backup = randomIndex;
+
+        while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
+            randomIndex++;
+        }
+
+        // 如果没有找到可用的元素
+        if (randomIndex == queue.length) {
+            randomIndex = backup;
+            while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
+                randomIndex--;
+            }
+        }
 
         item = queue[randomIndex];
 
