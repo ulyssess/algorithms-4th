@@ -5,38 +5,36 @@ import java.util.Iterator;
 /**
  * Created by wangaichao on 17/3/2.
  */
-@SuppressWarnings("unchecked") public class RandomizedQueue<Item> implements Iterable<Item> {
+public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    private int queueSize = 0;
-    private Item[] queue = null;
+    private int nodeSize = 0;
+    private Node first = null;
+
+    private class Node {
+        private Item item;
+        private Node next;
+    }
 
     // construct an empty randomized queue
     public RandomizedQueue() {
-        queue = (Item[]) new Object[1];
     }
 
     private class RandomizedQueueIterator implements Iterator<Item> {
-        private int size = queueSize;
+        private Node now = first;
 
         public boolean hasNext() {
-            return size > 0;
+            return now != null;
         }
 
         public Item next() {
-
-            if (size <= 0) {
+            if (now == null) {
                 throw new java.util.NoSuchElementException();
             }
 
-            Item item = null;
+            Node temp = now;
+            now = now.next;
 
-            int randomIndex = StdRandom.uniform(0, queue.length - 1);
-
-            item = queue[randomIndex];
-
-            size--;
-
-            return item;
+            return temp.item;
         }
 
         public void remove() {
@@ -44,124 +42,93 @@ import java.util.Iterator;
         }
     }
 
-    private void queueResizeBig() {
-        Item[] newQueue = (Item[]) new Object[queue.length * 2];
-
-        for (int i = 0; i < queueSize; i++) {
-            newQueue[i] = queue[i];
-        }
-        queue = newQueue;
-    }
-
-    private void queueResizeSmall() {
-        Item[] newQueue = (Item[]) new Object[queue.length / 2];
-
-        for (int i = 0; i < queueSize; i++) {
-            newQueue[i] = queue[i];
-        }
-
-        queue = newQueue;
-    }
-
     public boolean isEmpty()                 // is the queue empty?
     {
-        return queueSize == 0;
+        return nodeSize == 0;
     }
 
     public int size()                        // return the number of items on the queue
     {
-        return queueSize;
+        return nodeSize;
     }
 
     public void enqueue(Item item)           // add the item
     {
-        if (queueSize == queue.length) {
-            queueResizeBig();
+        if (item == null)
+            throw new java.lang.NullPointerException();
+
+        Node temp = new Node();
+        temp.item = item;
+
+        if (first == null) {
+            first = temp;
+            temp.next = null;
+        }
+        else {
+            temp.next = first;
+            first = temp;
         }
 
-        queue[queueSize] = item;
-
-        queueSize++;
+        nodeSize++;
     }
 
     public Item dequeue()                    // remove and return a random item
     {
-        int backup;
+        int i;
 
-        Item item = null;
-
-        if (this.size() == 0)
+        if (this.isEmpty())
             throw new java.util.NoSuchElementException();
 
-        if (queue.length == 1) {
-            item = queue[0];
-            queue[0] = null;
-            queueSize--;
-            return item;
+        Node now = null;
+        Node prev = null;
+
+        if (this.size() == 1) {
+            now = first;
+            first = null;
         }
+        else {
+            int index = StdRandom.uniform(0, nodeSize);
+            for (i = 0, now = first; i < index; i++) {
+                prev = now;
+                now = now.next;
+            }
 
-        int randomIndex = StdRandom.uniform(0, queue.length - 1);
-
-        backup = randomIndex;
-
-        while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
-            randomIndex++;
-        }
-
-        // 如果没有找到可用的元素
-        if (randomIndex == queue.length) {
-            randomIndex = backup;
-            while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
-                randomIndex--;
+            if (prev != null) {
+                prev.next = now.next;
+            }
+            else {
+                first = now.next;
             }
         }
 
-        item = queue[randomIndex];
+        nodeSize--;
 
-        queue[randomIndex] = null;
-
-        queueSize--;
-
-        if (queueSize < queue.length/4) {
-            queueResizeSmall();
-        }
-
-        return item;
+        return now.item;
     }
 
     public Item sample()                     // return (but do not remove) a random item
     {
-        int backup;
+        int i;
 
-        Item item = null;
-
-        if (this.size() == 0)
+        if (this.isEmpty())
             throw new java.util.NoSuchElementException();
 
-        if (queue.length == 1) {
-            item = queue[0];
-            return item;
+        Node now = null;
+        Node prev = null;
+
+        if (this.size() == 1) {
+            now = first;
+            first = null;
         }
-
-        int randomIndex = StdRandom.uniform(0, queue.length - 1);
-
-        backup = randomIndex;
-
-        while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
-            randomIndex++;
-        }
-
-        // 如果没有找到可用的元素
-        if (randomIndex == queue.length) {
-            randomIndex = backup;
-            while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
-                randomIndex--;
+        else {
+            int index = StdRandom.uniform(0, nodeSize);
+            for (i = 0, now = first; i < index; i++) {
+                prev = now;
+                now = now.next;
             }
         }
 
-        item = queue[randomIndex];
-
-        return item;
+        return now.item;
     }
 
 
