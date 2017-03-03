@@ -1,5 +1,3 @@
-package week2;
-
 import java.util.Iterator;
 
 /**
@@ -10,6 +8,11 @@ public class Deque<Item> implements Iterable<Item> {
     private int nodeSize = 0;
     private Node first = null;
     private Node last = null;
+
+    // construct an empty deque
+    public Deque() {
+
+    }
 
     private class Node {
         private Item item;
@@ -38,11 +41,6 @@ public class Deque<Item> implements Iterable<Item> {
         public void remove() {
             throw new java.lang.UnsupportedOperationException();
         }
-    }
-
-    // construct an empty deque
-    public Deque() {
-
     }
 
     public boolean isEmpty()                 // is the deque empty?
@@ -119,6 +117,8 @@ public class Deque<Item> implements Iterable<Item> {
             first.prev = null;
         }
 
+        nodeSize--;
+
         return old.item;
     }
 
@@ -139,6 +139,8 @@ public class Deque<Item> implements Iterable<Item> {
             last = old.prev;
             last.next = null;
         }
+
+        nodeSize--;
 
         return old.item;
     }

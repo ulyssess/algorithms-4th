@@ -1,5 +1,3 @@
-package week2;
-
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
@@ -7,7 +5,7 @@ import java.util.Iterator;
 /**
  * Created by wangaichao on 17/3/2.
  */
-public class RandomizedQueue<Item> implements Iterable<Item> {
+@SuppressWarnings("unchecked") public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private int queueSize = 0;
     private Item[] queue = null;

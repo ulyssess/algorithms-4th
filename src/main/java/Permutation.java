@@ -1,5 +1,3 @@
-package week2;
-
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
@@ -13,14 +11,14 @@ public class Permutation {
 
         size = Integer.parseInt(args[0]);
 
-        RandomizedQueue randomizedQueue = new RandomizedQueue();
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<String>();
 
-        while(!StdIn.isEmpty()) {
+        while (!StdIn.isEmpty()) {
             String temp = StdIn.readString();
             randomizedQueue.enqueue(temp);
         }
 
-        for (int i = 0; i < size;i ++) {
+        for (int i = 0; i < size; i++) {
             StdOut.println(randomizedQueue.dequeue());
         }
     }
