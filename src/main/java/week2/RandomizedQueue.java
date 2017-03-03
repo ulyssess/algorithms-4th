@@ -10,15 +10,14 @@ import java.util.Iterator;
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private int queueSize = 0;
-    private Item queue[] = null;
+    private Item[] queue = null;
 
     // construct an empty randomized queue
     public RandomizedQueue() {
         queue = (Item[]) new Object[1];
     }
 
-    private class RandomizedQueueIterator implements Iterator<Item>
-    {
+    private class RandomizedQueueIterator implements Iterator<Item> {
         private int size = queueSize;
 
         public boolean hasNext() {
@@ -48,16 +47,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private void queueResizeBig() {
-        Item newQueue[] = (Item[]) new Object[queue.length * 2];
+        Item[] newQueue = (Item[]) new Object[queue.length * 2];
 
         for (int i = 0; i < queueSize; i++) {
             newQueue[i] = queue[i];
         }
-         queue = newQueue;
+        queue = newQueue;
     }
 
     private void queueResizeSmall() {
-        Item newQueue[] = (Item[]) new Object[queue.length / 2];
+        Item[] newQueue = (Item[]) new Object[queue.length / 2];
 
         for (int i = 0; i < queueSize; i++) {
             newQueue[i] = queue[i];
