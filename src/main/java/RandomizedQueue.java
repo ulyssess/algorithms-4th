@@ -93,6 +93,13 @@ import java.util.Iterator;
         if (this.size() == 0)
             throw new java.util.NoSuchElementException();
 
+        if (queue.length == 1) {
+            item = queue[0];
+            queue[0] = null;
+            queueSize--;
+            return item;
+        }
+
         int randomIndex = StdRandom.uniform(0, queue.length - 1);
 
         backup = randomIndex;
@@ -124,9 +131,33 @@ import java.util.Iterator;
 
     public Item sample()                     // return (but do not remove) a random item
     {
+        int backup;
+
         Item item = null;
 
+        if (this.size() == 0)
+            throw new java.util.NoSuchElementException();
+
+        if (queue.length == 1) {
+            item = queue[0];
+            return item;
+        }
+
         int randomIndex = StdRandom.uniform(0, queue.length - 1);
+
+        backup = randomIndex;
+
+        while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
+            randomIndex++;
+        }
+
+        // 如果没有找到可用的元素
+        if (randomIndex == queue.length) {
+            randomIndex = backup;
+            while (randomIndex >= 0 && randomIndex < queue.length && queue[randomIndex] == null) {
+                randomIndex--;
+            }
+        }
 
         item = queue[randomIndex];
 
