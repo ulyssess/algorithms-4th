@@ -1,8 +1,7 @@
-package Week2;
+package week2;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * Created by wangaichao on 17/3/3.
