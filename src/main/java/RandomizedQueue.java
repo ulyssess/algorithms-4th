@@ -20,21 +20,38 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private class RandomizedQueueIterator implements Iterator<Item> {
-        private Node now = first;
+        private int used = 0;
+        private Node now = null;
 
         public boolean hasNext() {
-            return now != null;
+            return used != nodeSize;
         }
 
         public Item next() {
-            if (now == null) {
+            int j;
+
+            if (used == nodeSize) {
                 throw new java.util.NoSuchElementException();
             }
 
-            Node temp = now;
-            now = now.next;
+            if (now == null) {
+                int index = StdRandom.uniform(0, nodeSize);
+                for (j = 0, now = first; j < index; j++) {
+                    now = now.next;
+                }
+            }
+            else {
+                if (now.next == null) {
+                    now = first;
+                }
+                else {
+                    now = now.next;
+                }
+            }
 
-            return temp.item;
+            used++;
+
+            return now.item;
         }
 
         public void remove() {
