@@ -45,6 +45,22 @@ public class TestSort {
             StdOut.print(arr[i] + " ");
         }
 
+
         StdOut.println();
+
+        StdRandom.setSeed(randomSeed);
+
+        for (i = 0; i < arr.length; i++) {
+            arr[i] = StdRandom.uniform(0, randomRange);
+        }
+
+        InsertionSort insertionSort = new InsertionSort(arr);
+
+        for (i = 0; i < arr.length; i++) {
+            StdOut.print(arr[i] + " ");
+        }
+
+        StdOut.println();
+
     }
 }
