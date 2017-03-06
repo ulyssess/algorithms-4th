@@ -1,4 +1,4 @@
-package week1.Percolation; /******************************************************************************
+/******************************************************************************
  *  Compilation:  javac PercolationVisualizer.java
  *  Execution:    java PercolationVisualizer input.txt
  *  Dependencies: Percolation.java
