@@ -45,8 +45,9 @@ public class TestSort {
             StdOut.print(arr[i] + " ");
         }
 
-
         StdOut.println();
+
+
 
         StdRandom.setSeed(randomSeed);
 
@@ -62,5 +63,20 @@ public class TestSort {
 
         StdOut.println();
 
+
+
+        StdRandom.setSeed(randomSeed);
+
+        for (i = 0; i < arr.length; i++) {
+            arr[i] = StdRandom.uniform(0, randomRange);
+        }
+
+        ShellSort shellSort = new ShellSort(arr);
+
+        for (i = 0; i < arr.length; i++) {
+            StdOut.print(arr[i] + " ");
+        }
+
+        StdOut.println();
     }
 }
