@@ -28,12 +28,6 @@ public class TestSort {
             arr[i] = StdRandom.uniform(0, randomRange);
         }
 
-        for (i = 0; i < arr.length; i++) {
-            StdOut.print(arr[i] + " ");
-        }
-
-        StdOut.println();
-
         MergeSort mergeSort = new MergeSort(arr);
 
         for (i = 0; i < arr.length; i++) {

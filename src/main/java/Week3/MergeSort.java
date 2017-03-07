@@ -7,62 +7,44 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class MergeSort {
     public MergeSort(int[] arr) {
-        int i;
 
-        int[] newArr = sort(arr);
+        int [] newArr = new int[arr.length];
 
-        for (i = 0; i < arr.length; i++) {
-            StdOut.print(newArr[i] + " ");
-        }
-
-        StdOut.println();
+        sort(arr, 0, arr.length - 1, newArr);
     }
 
-    public int[] merge(int prevArr[], int nextArr[])
+    private void merge(int arr[], int first, int mid, int last, int newArr[])
     {
         int i;
         int j;
         int k;
 
-        int [] c = new int[prevArr.length + nextArr.length];
-
-        for (i = 0, j = 0, k = 0; i < prevArr.length && j < nextArr.length; k++) {
-            if (prevArr[i] < nextArr[j])
-                c[k] = prevArr[i++];
+        for (i = first, j = mid + 1, k = 0; i <= mid && j <= last; k++) {
+            if (arr[i] < arr[j])
+                newArr[k] = arr[i++];
             else
-                c[k] = nextArr[j++];
+                newArr[k] = arr[j++];
         }
 
-        for (; i < prevArr.length; i++, k++)
-            c[k] = prevArr[i];
+        for (; i <= mid; i++, k++)
+            newArr[k] = arr[i];
 
-        for (; j < nextArr.length; j++, k++)
-            c[k] = nextArr[j];
+        for (; j <= last; j++, k++)
+            newArr[k] = arr[j];
 
-        return c;
+        for (i = 0; i < k; i++)
+            arr[first + i] = newArr[i];
     }
 
-    public int[] sort(int arr[])
+    public void sort(int arr[], int first, int last, int newArr[])
     {
-        int mid = arr.length/2;
+        if (first < last) {
+            int mid = (first + last) / 2;
 
-        if (mid == 0)
-            return arr;
+            sort(arr, first, mid, newArr);
+            sort(arr, mid + 1, last, newArr);
 
-        int [] prevArr = new int[mid];
-        int [] nextArr = new int[arr.length - mid];
-
-        for(int i = 0; i < arr.length; i++) {
-            if (i < mid) {
-                prevArr[i] = arr[i];
-            } else {
-                nextArr[i - mid] = arr[i];
-            }
+            merge(arr, first, mid, last, newArr);
         }
-
-        int [] newPrevArr = sort(prevArr);
-        int [] newNextArr = sort(nextArr);
-
-        return merge(newPrevArr, newNextArr);
     }
 }
