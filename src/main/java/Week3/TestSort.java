@@ -1,10 +1,5 @@
 package Week3;
 
-import Week2.BubbleSort;
-import Week2.InsertionSort;
-import Week2.SelectionSort;
-import Week2.ShellSort;
-import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 

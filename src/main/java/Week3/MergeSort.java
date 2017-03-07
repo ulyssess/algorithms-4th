@@ -1,7 +1,5 @@
 package Week3;
 
-import edu.princeton.cs.algs4.StdOut;
-
 /**
  * Created by wangaichao on 17/3/7.
  */
