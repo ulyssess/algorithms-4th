@@ -17,18 +17,16 @@ public class MergeSort {
         int j;
         int k;
 
-        for (i = first, j = mid + 1, k = 0; i <= mid && j <= last; k++) {
-            if (arr[i] < arr[j])
+        for (i = first, j = mid + 1, k = 0; k <= last - first; k++) {
+            if (i > mid)
+                newArr[k] = arr[j++];
+            else if (j > last)
+                newArr[k] = arr[i++];
+            else if (arr[i] < arr[j])
                 newArr[k] = arr[i++];
             else
                 newArr[k] = arr[j++];
         }
-
-        for (; i <= mid; i++, k++)
-            newArr[k] = arr[i];
-
-        for (; j <= last; j++, k++)
-            newArr[k] = arr[j];
 
         for (i = 0; i < k; i++)
             arr[first + i] = newArr[i];
