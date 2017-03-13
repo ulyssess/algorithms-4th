@@ -134,8 +134,15 @@ public class Point implements Comparable<Point> {
     public static void main(String[] args) {
         /* YOUR CODE HERE */
         Point p0 = new Point(0, 0);
+
         Point p1 = new Point(10000, 10000);
+        Point p2 = new Point(0, 10000);
+        Point p3 = new Point(10000, 0);
+        Point p4 = new Point(0, 0);
 
         StdOut.println(p0.slopeTo(p1));
+        StdOut.println(p0.slopeTo(p2));
+        StdOut.println(p0.slopeTo(p3));
+        StdOut.println(p0.slopeTo(p4));
     }
 }
