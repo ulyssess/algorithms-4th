@@ -18,25 +18,25 @@ public class BruteCollinearPoints {
 
         Arrays.sort(points);
 
-        Vector tmpVector = new Vector();
+        Vector<LineSegment> tmpVector = new Vector<LineSegment>();
 
         for (int i = 0; i < points.length; i++) {
             for (int j = i; j < points.length; j++) {
                 for (int k = j; k < points.length; k++) {
-                    for (int l = k; l < points.length; l++) {
+                    for (int m = k; m < points.length; m++) {
 
                         if (points[i].compareTo(points[j]) == 0 ||
                                 points[i].compareTo(points[k]) == 0 ||
-                                points[i].compareTo(points[l]) == 0 ||
+                                points[i].compareTo(points[m]) == 0 ||
                                 points[j].compareTo(points[k]) == 0 ||
-                                points[j].compareTo(points[l]) == 0 ||
-                                points[k].compareTo(points[l]) == 0 )
+                                points[j].compareTo(points[m]) == 0 ||
+                                points[k].compareTo(points[m]) == 0)
                             continue;
 
                         if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
-                                &&  points[i].slopeTo(points[j]) == points[i].slopeTo(points[l])) {
+                                &&  points[i].slopeTo(points[j]) == points[i].slopeTo(points[m])) {
 
-                            LineSegment lineSegment = new LineSegment(points[i], points[l]);
+                            LineSegment lineSegment = new LineSegment(points[i], points[m]);
                             tmpVector.addElement(lineSegment);
                             lineNumber++;
                         }
@@ -45,7 +45,7 @@ public class BruteCollinearPoints {
             }
         }
 
-        segments = (LineSegment[]) tmpVector.toArray(new LineSegment[tmpVector.size()]);
+        segments = tmpVector.toArray(new LineSegment[tmpVector.size()]);
     }
 
     // the number of line segments
