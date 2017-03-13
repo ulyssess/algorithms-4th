@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Arrays;
+import java.util.Vector;
 
 /**
  * Created by wangaichao on 17/3/12.
@@ -16,37 +17,35 @@ public class BruteCollinearPoints {
     public BruteCollinearPoints(Point[] points) {
 
         Arrays.sort(points);
-        segments = new LineSegment[points.length];
+
+        Vector tmpVector = new Vector();
 
         for (int i = 0; i < points.length; i++) {
-            for (int j = i; j < points.length; j++)
-                for (int k = j; k < points.length; k++)
+            for (int j = i; j < points.length; j++) {
+                for (int k = j; k < points.length; k++) {
                     for (int l = k; l < points.length; l++) {
-                        if (points[i].compareTo(points[j]) == 0 ||
-                            points[i].compareTo(points[k]) == 0 ||
-                            points[i].compareTo(points[l]) == 0 ||
-                            points[j].compareTo(points[k]) == 0 ||
-                                )
-                        if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
-                        &&  points[i].slopeTo(points[j]) == points[i].slopeTo(points[l])) {
 
-                            StdOut.println(points[i].toString());
-                            StdOut.println(points[j].toString());
-                            StdOut.println(points[k].toString());
-                            StdOut.println(points[l].toString());
+                        if (points[i].compareTo(points[j]) == 0 ||
+                                points[i].compareTo(points[k]) == 0 ||
+                                points[i].compareTo(points[l]) == 0 ||
+                                points[j].compareTo(points[k]) == 0 ||
+                                points[j].compareTo(points[l]) == 0 ||
+                                points[k].compareTo(points[l]) == 0 )
+                            continue;
+
+                        if (points[i].slopeTo(points[j]) == points[i].slopeTo(points[k])
+                                &&  points[i].slopeTo(points[j]) == points[i].slopeTo(points[l])) {
 
                             LineSegment lineSegment = new LineSegment(points[i], points[l]);
-                            segments[lineNumber] = lineSegment;
-                            StdOut.println(lineNumber);
+                            tmpVector.addElement(lineSegment);
                             lineNumber++;
-
-                            StdOut.println();
-                            StdOut.println();
-                            StdOut.println();
-
                         }
                     }
+                }
+            }
         }
+
+        segments = (LineSegment[]) tmpVector.toArray(new LineSegment[tmpVector.size()]);
     }
 
     // the number of line segments
@@ -84,6 +83,7 @@ public class BruteCollinearPoints {
 
         // print and draw the line segments
         BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
