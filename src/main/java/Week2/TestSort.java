@@ -9,9 +9,9 @@ import edu.princeton.cs.algs4.Stopwatch;
  * Created by wangaichao on 17/3/6.
  */
 public class TestSort {
-    private static final int arraySize = 10;
+    private static final int arraySize = 10000;
     private static final int randomSeed = 31415926;
-    private static final int randomRange = 100;
+    private static final int randomRange = 1000000;
 
     public static void main(final String[] args)
     {
