@@ -11,14 +11,24 @@ import java.util.Vector;
 public class BruteCollinearPoints {
 
     private int lineNumber = 0;
+    private LineSegment[] trueSegments;
     private LineSegment[] segments;
+    private Vector<LineSegment> tmpVector;
 
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
 
+        if (points == null)
+            throw new java.lang.NullPointerException();
+
         Arrays.sort(points);
 
-        Vector<LineSegment> tmpVector = new Vector<LineSegment>();
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i].compareTo(points[i + 1]) == 0)
+                throw new java.lang.IllegalArgumentException();
+        }
+
+        tmpVector = new Vector<LineSegment>();
 
         for (int i = 0; i < points.length; i++) {
             for (int j = i; j < points.length; j++) {
@@ -45,7 +55,7 @@ public class BruteCollinearPoints {
             }
         }
 
-        segments = tmpVector.toArray(new LineSegment[tmpVector.size()]);
+        trueSegments = tmpVector.toArray(new LineSegment[tmpVector.size()]);
     }
 
     // the number of line segments
@@ -57,6 +67,7 @@ public class BruteCollinearPoints {
     // the line segments
     public LineSegment[] segments()
     {
+        segments = trueSegments.clone();
         return segments;
     }
 
@@ -83,6 +94,8 @@ public class BruteCollinearPoints {
 
         // print and draw the line segments
         BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+        StdOut.println(collinear.numberOfSegments());
+        StdOut.println(collinear.numberOfSegments());
 
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);

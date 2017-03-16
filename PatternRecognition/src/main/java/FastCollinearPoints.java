@@ -12,32 +12,63 @@ import java.util.Vector;
 public class FastCollinearPoints {
 
     private int lineNumber = 0;
-    private LineSegment[] segments;
+    private Vector<LineSegment> tmpVector;
 
     // finds all line segments containing 4 or more points
     public FastCollinearPoints(Point[] points)     {
 
-        Arrays.sort(points);
-        Vector<LineSegment> tmpVector = new Vector<LineSegment>();
-
-        Comparator<Point> nameComparator = points[0].slopeOrder();
-        Arrays.sort(points, nameComparator);
-
         int temp;
+        int nowNumberShadow;
+        tmpVector = new Vector<LineSegment>();
+        Point[] oldPoints = points.clone();
 
-        for (int j = 0; j < points.length - 3; j = temp, j++) {
-            temp = j;
-            while (temp < points.length - 2 && points[temp].slopeTo(points[temp + 1]) == points[temp].slopeTo(points[temp + 2])) {
-                temp++;
-            }
+        if (points == null)
+            throw new java.lang.NullPointerException();
 
-            if (temp - j >= 2) {
-                LineSegment lineSegment = new LineSegment(points[j], points[temp + 1]);
-                tmpVector.addElement(lineSegment);
-            }
+        Arrays.sort(points);
+
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i].compareTo(points[i + 1]) == 0)
+                throw new java.lang.IllegalArgumentException();
         }
 
-        segments = tmpVector.toArray(new LineSegment[tmpVector.size()]);
+        for (int nowNumber = points.length; nowNumber > 3; nowNumber = nowNumberShadow, nowNumber--) {
+
+            nowNumberShadow = nowNumber;
+
+            Point[] newPoints = new Point[nowNumberShadow];
+            for (int k = 0, m = 0; k < newPoints.length && m < oldPoints.length; m++) {
+                if (oldPoints[m] != null)
+                    newPoints[k++] = oldPoints[m];
+            }
+
+            Arrays.sort(newPoints);
+            Comparator<Point> nameComparator = newPoints[0].slopeOrder();
+            Arrays.sort(newPoints, nameComparator);
+
+            for (int j = 1; j < newPoints.length - 1; j = temp, j++) {
+                temp = j;
+                while (temp < newPoints.length - 1 && newPoints[0].slopeTo(newPoints[temp]) == newPoints[0].slopeTo(newPoints[temp + 1])) {
+                    temp++;
+                }
+
+                if (temp - j >= 2) {
+                    LineSegment lineSegment = new LineSegment(newPoints[0], newPoints[temp]);
+                    tmpVector.addElement(lineSegment);
+
+                    for (int m = 0; m < oldPoints.length; m++) {
+                        if (m >= j && m <= temp)
+                            newPoints[m] = null;
+                    }
+
+                    nowNumberShadow = nowNumberShadow - (temp - j + 1);
+                    break;
+                }
+            }
+            newPoints[0] = null;
+
+            oldPoints = newPoints;
+        }
     }
 
     // the number of line segments
@@ -49,7 +80,7 @@ public class FastCollinearPoints {
     // the line segments
     public LineSegment[] segments()
     {
-        return segments;
+        return tmpVector.toArray(new LineSegment[tmpVector.size()]);
     }
 
     public static void main(String[] args) {

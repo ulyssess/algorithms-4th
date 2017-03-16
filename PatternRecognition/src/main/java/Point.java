@@ -110,7 +110,14 @@ public class Point implements Comparable<Point> {
 
         return new Comparator<Point>() {
             public int compare(Point o1, Point o2) {
-                return (int) (slopeTo(o1) - slopeTo(o2));
+                double slop1 = slopeTo(o1);
+                double slop2 = slopeTo(o2);
+                if (slop1 > slop2)
+                    return +1;
+                else if (slop1 < slop2)
+                    return -1;
+                else
+                    return 0;
             }
         };
     }
