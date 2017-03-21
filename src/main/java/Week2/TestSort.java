@@ -1,6 +1,7 @@
 package Week2;
 
 import Week3.MergeSort;
+import Week3.QuickSort;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
@@ -9,9 +10,9 @@ import edu.princeton.cs.algs4.Stopwatch;
  * Created by wangaichao on 17/3/6.
  */
 public class TestSort {
-    private static final int arraySize = 10000;
+    private static final int arraySize = 100;
     private static final int randomSeed = 31415926;
-    private static final int randomRange = 1000000;
+    private static final int randomRange = 10000;
 
     public static void main(final String[] args)
     {
@@ -109,6 +110,25 @@ public class TestSort {
         MergeSort mergeSort = new MergeSort(arr);
 
         StdOut.println("归并排序: " + stopwatchMerge.elapsedTime());
+
+        for (i = 0; i < arr.length; i++) {
+            StdOut.print(arr[i] + " ");
+        }
+
+        StdOut.println();
+
+
+        StdRandom.setSeed(randomSeed);
+
+        for (i = 0; i < arr.length; i++) {
+            arr[i] = StdRandom.uniform(0, randomRange);
+        }
+
+        Stopwatch stopwatchQuick = new Stopwatch();
+
+        QuickSort quickSort = new QuickSort(arr);
+
+        StdOut.println("快速排序: " + stopwatchQuick.elapsedTime());
 
         for (i = 0; i < arr.length; i++) {
             StdOut.print(arr[i] + " ");
