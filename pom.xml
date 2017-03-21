@@ -12,5 +12,6 @@
         <module>Percolation</module>
         <module>DequesAndRandomizedQueues</module>
         <module>PatternRecognition</module>
+        <module>Puzzle8</module>
     </modules>
 </project>
