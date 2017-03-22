@@ -21,7 +21,7 @@ public class MergeSort {
         int k;
 
         for (i = first, j = mid, k = 0; k <= last - first; k++) {
-            if (i > mid)
+            if (i >= mid)
                 newArr[k] = arr[j++];
             else if (j > last)
                 newArr[k] = arr[i++];
