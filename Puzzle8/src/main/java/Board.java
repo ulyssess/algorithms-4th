@@ -81,14 +81,17 @@ public class Board {
         int j = 0;
 
         for (i = 0; i < blocks.length; i++) {
-            for (j = 0; j < blocks.length - 1; j++) {
+            for (j = 0; j < blocks.length; j++) {
+                if (i == blocks.length - 1 && j == blocks.length - 1) {
+                    if (blocks[i][j] != 0)
+                        return false;
+                    continue;
+                }
+
                 if (blocks[i][j] != i * blocks.length + j + 1)
                     return false;
             }
         }
-
-        if (blocks[i][j] != 0)
-            return false;
 
         return true;
     }
@@ -97,12 +100,16 @@ public class Board {
     {
         int i = 0;
         int j = 0;
+        int x = 0;
+        int y = 0;
         int stopFlag = 0;
         int temp;
 
         for (i = 0; i < blocks.length - 1 && stopFlag == 0; i++) {
             for (j = 0; j < blocks.length - 1; j++) {
                 if (blocks[i][j] != 0 && blocks[i + 1][j + 1] != 0) {
+                    x = i;
+                    y = i;
                     temp = blocks[i][j];
                     blocks[i][j] = blocks[i + 1][j + 1];
                     blocks[i + 1][j + 1] = temp;
@@ -114,9 +121,9 @@ public class Board {
 
         Board newBoard = new Board(this.blocks);
 
-        temp = blocks[i][j];
-        blocks[i][j] = blocks[i + 1][j + 1];
-        blocks[i + 1][j + 1] = temp;
+        temp = blocks[x][y];
+        blocks[x][y] = blocks[x + 1][y + 1];
+        blocks[x + 1][y + 1] = temp;
 
         return newBoard;
     }
@@ -170,8 +177,8 @@ public class Board {
 
     private void findNeighbors()
     {
-        int i;
-        int j;
+        int x = 0;
+        int y = 0;
         int temp;
         int index;
 
@@ -179,55 +186,58 @@ public class Board {
 
         boardList = new Board[4];
 
-        for (i = 0, j = 0; i < blocks.length && this.blocks[i][j] != 0; i++) {
-            for (; j < blocks.length; j++) {
-                if (this.blocks[i][j] == 0)
+        for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks.length; j++) {
+                if (this.blocks[i][j] == 0) {
+                    x = i;
+                    y = j;
                     break;
+                }
             }
         }
 
         index = 0;
 
         // 上
-        if (i - 1 > 0) {
+        if (x - 1 > 0) {
             Board that = new Board(this.blocks);
 
-            temp = that.blocks[i][j];
-            that.blocks[i][j] = that.blocks[i - 1][j];
-            that.blocks[i - 1][j] = temp;
+            temp = that.blocks[x][y];
+            that.blocks[x][y] = that.blocks[x - 1][y];
+            that.blocks[x - 1][y] = temp;
 
             boardList[index++] = that;
         }
 
         // 下
-        if (i + 1 < blocks.length) {
+        if (x + 1 < blocks.length) {
             Board that = new Board(this.blocks);
 
-            temp = that.blocks[i][j];
-            that.blocks[i][j] = that.blocks[i + 1][j];
-            that.blocks[i + 1][j] = temp;
+            temp = that.blocks[x][y];
+            that.blocks[x][y] = that.blocks[x + 1][y];
+            that.blocks[x + 1][y] = temp;
 
             boardList[index++] = that;
         }
 
         // 左
-        if (j - 1 > 0) {
+        if (y - 1 > 0) {
             Board that = new Board(this.blocks);
 
-            temp = that.blocks[i][j];
-            that.blocks[i][j] = that.blocks[i][j - 1];
-            that.blocks[i][j - 1] = temp;
+            temp = that.blocks[x][y];
+            that.blocks[x][y] = that.blocks[x][y - 1];
+            that.blocks[x][y - 1] = temp;
 
             boardList[index++] = that;
         }
 
         // 右
-        if (j + 1 < blocks.length) {
+        if (y + 1 < blocks.length) {
             Board that = new Board(this.blocks);
 
-            temp = that.blocks[i][j];
-            that.blocks[i][j] = that.blocks[i][j + 1];
-            that.blocks[i][j + 1] = temp;
+            temp = that.blocks[x][y];
+            that.blocks[x][y] = that.blocks[x][y + 1];
+            that.blocks[x][y + 1] = temp;
 
             boardList[index++] = that;
         }
