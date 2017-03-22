@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
@@ -52,9 +54,20 @@ public class Board {
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
                 if (blocks[i][j] != 0) {
-                    x = blocks[i][j]/blocks.length + 1;
-                    y = blocks[i][j] % blocks.length - 1;
-                    this.manhattanDistance += (x + y) - (i + j);
+                    if (blocks[i][j] > blocks.length) {
+                        x = blocks[i][j]/blocks.length;
+                        y = blocks[i][j]%blocks.length;
+                        if (blocks[i][j]%blocks.length == 0) {
+                            x--;
+                            y = blocks.length - 1;
+                        } else {
+                            y--;
+                        }
+                    } else {
+                        x = 0;
+                        y = blocks[i][j] - 1;
+                    }
+                    this.manhattanDistance += java.lang.Math.abs(x - i) + java.lang.Math.abs(y - j);
                 }
             }
         }
@@ -65,7 +78,7 @@ public class Board {
     public boolean isGoal()                // is this board the goal board?
     {
         int i;
-        int j;
+        int j = 0;
 
         for (i = 0; i < blocks.length; i++) {
             for (j = 0; j < blocks.length - 1; j++) {
@@ -82,16 +95,18 @@ public class Board {
 
     public Board twin()                    // a board that is obtained by exchanging any pair of blocks
     {
-        int i;
-        int j;
+        int i = 0;
+        int j = 0;
+        int stopFlag = 0;
         int temp;
 
-        for (i = 0; i < blocks.length - 1; i++) {
+        for (i = 0; i < blocks.length - 1 && stopFlag == 0; i++) {
             for (j = 0; j < blocks.length - 1; j++) {
                 if (blocks[i][j] != 0 && blocks[i + 1][j + 1] != 0) {
                     temp = blocks[i][j];
                     blocks[i][j] = blocks[i + 1][j + 1];
                     blocks[i + 1][j + 1] = temp;
+                    stopFlag = 1;
                     break;
                 }
             }
@@ -113,6 +128,9 @@ public class Board {
 
         if (y == null)
             throw new java.lang.NullPointerException();
+
+        if (getClass() != y.getClass())
+            return false;
 
         Board that = (Board) y;
 
@@ -161,8 +179,8 @@ public class Board {
 
         boardList = new Board[4];
 
-        for (i = 0; i < blocks.length; i++) {
-            for (j = 0; j < blocks.length; j++) {
+        for (i = 0, j = 0; i < blocks.length && this.blocks[i][j] != 0; i++) {
+            for (; j < blocks.length; j++) {
                 if (this.blocks[i][j] == 0)
                     break;
             }
@@ -219,7 +237,7 @@ public class Board {
 
         neighbors = new Board[index];
 
-        for (int k = 0; k < index - 1; k++) {
+        for (int k = 0; k < index; k++) {
             neighbors[k] = boardList[k];
         }
     }
@@ -246,6 +264,7 @@ public class Board {
         str = String.valueOf(blocks.length) + "\n";
         for (i = 0; i < blocks.length; i++) {
             for (j = 0; j < blocks.length; j++) {
+                str += " ";
                 str += String.valueOf(blocks[i][j]);
             }
             str += "\n";
@@ -258,6 +277,42 @@ public class Board {
 
     public static void main(String[] args) // unit tests (not graded)
     {
+        // create initial board from file
+        In in = new In(args[0]);
+        int n = in.readInt();
+        int[][] blocks = new int[n][n];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                blocks[i][j] = in.readInt();
+        Board initial = new Board(blocks);
 
+        StdOut.println(initial.toString());
+
+        for (Board temp: initial.neighbors() ) {
+            StdOut.println(temp.toString());
+        }
+
+        StdOut.println(initial.hamming());
+        StdOut.println(initial.manhattan());
+
+        StdOut.println(initial.twin().toString());
+
+        if (initial.equals(initial.twin())) {
+            StdOut.println("equal");
+        } else {
+            StdOut.println("not equal");
+        }
+
+        if (initial.equals(initial)) {
+            StdOut.println("equal");
+        } else {
+            StdOut.println("not equal");
+        }
+
+        if (initial.isGoal()) {
+            StdOut.println("is Goal");
+        } else {
+            StdOut.println("not Goal");
+        }
     }
 }
