@@ -11,8 +11,8 @@ public class Solver {
     private int steps;
     private boolean isSolved;
 
-    MinPQ<Board> openList;
-    List<Board> closeList;
+    private MinPQ<Board> openList;
+    private List<Board> closeList;
 
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
@@ -25,8 +25,8 @@ public class Solver {
             }
         };
 
-        openList = new MinPQ(comparato);
-        closeList = new ArrayList();
+        openList = new MinPQ<Board>(comparato);
+        closeList = new ArrayList<Board>();
 
         openList.insert(initial);
 
@@ -35,7 +35,7 @@ public class Solver {
 
     private boolean inCloseList(Board node)
     {
-        if(closeList.isEmpty())
+        if (closeList.isEmpty())
             return false;
 
         for (Board board: closeList) {
@@ -46,9 +46,9 @@ public class Solver {
         return false;
     }
 
-    public boolean dealPuzzle8()
+    private boolean dealPuzzle8()
     {
-        Board searchNode = null;
+        Board searchNode;
 
         while (true) {
             // 从openList中获取一个board

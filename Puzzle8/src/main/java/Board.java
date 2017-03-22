@@ -1,6 +1,5 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
 
@@ -56,14 +55,16 @@ public class Board {
                 if (blocks[i][j] != 0) {
                     if (blocks[i][j] > blocks.length) {
                         x = blocks[i][j]/blocks.length;
-                        y = blocks[i][j]%blocks.length;
-                        if (blocks[i][j]%blocks.length == 0) {
+                        y = blocks[i][j] % blocks.length;
+                        if (blocks[i][j] % blocks.length == 0) {
                             x--;
                             y = blocks.length - 1;
-                        } else {
+                        }
+                        else {
                             y--;
                         }
-                    } else {
+                    }
+                    else {
                         x = 0;
                         y = blocks[i][j] - 1;
                     }
@@ -134,7 +135,7 @@ public class Board {
         int j;
 
         if (y == null)
-            throw new java.lang.NullPointerException();
+            return false;
 
         if (getClass() != y.getClass())
             return false;
@@ -154,7 +155,7 @@ public class Board {
         return true;
     }
 
-    private class neighborIterator implements Iterator<Board> {
+    private class NeighborIterator implements Iterator<Board> {
 
         private int index = 0;
 
@@ -165,7 +166,8 @@ public class Board {
         public Board next() {
             if (hasNext()) {
                 return neighbors[index++];
-            } else {
+            }
+            else {
                 throw new java.util.NoSuchElementException();
             }
         }
@@ -199,7 +201,7 @@ public class Board {
         index = 0;
 
         // 上
-        if (x - 1 > 0) {
+        if (x - 1 >= 0) {
             Board that = new Board(this.blocks);
 
             temp = that.blocks[x][y];
@@ -221,7 +223,7 @@ public class Board {
         }
 
         // 左
-        if (y - 1 > 0) {
+        if (y - 1 >= 0) {
             Board that = new Board(this.blocks);
 
             temp = that.blocks[x][y];
@@ -260,7 +262,7 @@ public class Board {
 
         return new Iterable<Board>() {
             public Iterator<Board> iterator() {
-                return new neighborIterator();
+                return new NeighborIterator();
             }
         };
     }
@@ -269,20 +271,21 @@ public class Board {
     {
         int i;
         int j;
-        String str;
 
-        str = String.valueOf(blocks.length) + "\n";
+        StringBuilder str = new StringBuilder();
+
+        str.append(String.valueOf(blocks.length) + "\n");
         for (i = 0; i < blocks.length; i++) {
             for (j = 0; j < blocks.length; j++) {
-                str += " ";
-                str += String.valueOf(blocks[i][j]);
+                str.append(" ");
+                str.append(String.valueOf(blocks[i][j]));
             }
-            str += "\n";
+            str.append("\n");
         }
 
-        str += "\n";
+        str.append("\n");
 
-        return str;
+        return str.toString();
     }
 
     public static void main(String[] args) // unit tests (not graded)
@@ -298,7 +301,7 @@ public class Board {
 
         StdOut.println(initial.toString());
 
-        for (Board temp: initial.neighbors() ) {
+        for (Board temp: initial.neighbors()) {
             StdOut.println(temp.toString());
         }
 
@@ -309,19 +312,15 @@ public class Board {
 
         if (initial.equals(initial.twin())) {
             StdOut.println("equal");
-        } else {
-            StdOut.println("not equal");
         }
-
-        if (initial.equals(initial)) {
-            StdOut.println("equal");
-        } else {
+        else {
             StdOut.println("not equal");
         }
 
         if (initial.isGoal()) {
             StdOut.println("is Goal");
-        } else {
+        }
+        else {
             StdOut.println("not Goal");
         }
     }
