@@ -152,7 +152,76 @@ public class Board {
 
     private void findNeighbors()
     {
+        int i;
+        int j;
+        int temp;
+        int index;
 
+        Board[] boardList;
+
+        boardList = new Board[4];
+
+        for (i = 0; i < blocks.length; i++) {
+            for (j = 0; j < blocks.length; j++) {
+                if (this.blocks[i][j] == 0)
+                    break;
+            }
+        }
+
+        index = 0;
+
+        // 上
+        if (i - 1 > 0) {
+            Board that = new Board(this.blocks);
+
+            temp = that.blocks[i][j];
+            that.blocks[i][j] = that.blocks[i - 1][j];
+            that.blocks[i - 1][j] = temp;
+
+            boardList[index++] = that;
+        }
+
+        // 下
+        if (i + 1 < blocks.length) {
+            Board that = new Board(this.blocks);
+
+            temp = that.blocks[i][j];
+            that.blocks[i][j] = that.blocks[i + 1][j];
+            that.blocks[i + 1][j] = temp;
+
+            boardList[index++] = that;
+        }
+
+        // 左
+        if (j - 1 > 0) {
+            Board that = new Board(this.blocks);
+
+            temp = that.blocks[i][j];
+            that.blocks[i][j] = that.blocks[i][j - 1];
+            that.blocks[i][j - 1] = temp;
+
+            boardList[index++] = that;
+        }
+
+        // 右
+        if (j + 1 < blocks.length) {
+            Board that = new Board(this.blocks);
+
+            temp = that.blocks[i][j];
+            that.blocks[i][j] = that.blocks[i][j + 1];
+            that.blocks[i][j + 1] = temp;
+
+            boardList[index++] = that;
+        }
+
+        if (index < 1)
+            return;
+
+        neighbors = new Board[index];
+
+        for (int k = 0; k < index - 1; k++) {
+            neighbors[k] = boardList[k];
+        }
     }
 
     public Iterable<Board> neighbors()     // all neighboring boards
